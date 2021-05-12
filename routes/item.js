@@ -28,4 +28,23 @@ router.post("/addItem", async (req, res) => {
   }
 });
 
+const generateProjection = (number) => {
+  const values = number.split("");
+  const keys = ["id", "name", "timeToPrep", "type"];
+  const merged = keys.reduce(
+    (obj, key, index) => ({ ...obj, [key]: parseInt(values[index], 10) }),
+    {}
+  );
+  return merged;
+};
+
+router.get("/getAllItems", async (req, res) => {
+  try {
+    const allItems = await Item.find({});
+    res.send(allItems);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;
