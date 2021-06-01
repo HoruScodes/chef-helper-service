@@ -17,6 +17,9 @@ const menuSchema = new mongoose.Schema({
   instructions: {
     type: String,
   },
+  type: {
+    type: String,
+  },
   ingredients: {
     type: [Number],
   },
