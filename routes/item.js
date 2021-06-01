@@ -47,4 +47,19 @@ router.get("/getAllItems", async (req, res) => {
   }
 });
 
+router.get("/getAllItemsById", async (req, res) => {
+  try {
+    const allItems = await Item.find({}, { _id: 0, id: 1, name: 1 });
+    res.send(allItems);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+const getItemById = async (id) => {
+  const item = await Item.find({ id: id });
+  return item;
+};
+
 module.exports = router;
+module.exports.getItemById = getItemById;

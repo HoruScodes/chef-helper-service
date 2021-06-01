@@ -29,12 +29,11 @@ const fileFilter = (req, file, cb) => {
 let upload = multer({ storage, fileFilter });
 
 router.post("/addMenuItem", upload.single("photo"), (req, res) => {
-  console.log(JSON.parse(req.body.ingredients));
-  console.log(typeof req.body.ingredients);
   const menuItem = new MenuItem({
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
+    type: req.body.type,
     photo: {
       data: fs.readFileSync(
         path.join(__dirname + "/uploads/" + req.file.filename)
@@ -42,7 +41,7 @@ router.post("/addMenuItem", upload.single("photo"), (req, res) => {
       contentType: "image/png",
     },
     instructions: req.body.instructions,
-    ingredients: JSON.parse(req.body.ingredients),
+    ingredients: req.body.ingredients.split(","),
   });
 
   menuItem
