@@ -3,6 +3,7 @@ const User = require("../model/User");
 const { registerValidation, loginValidation } = require("../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Item = require("../model/Item");
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -35,12 +36,15 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  console.log(req.body);
   const { error } = loginValidation(req.body);
   if (error) {
     return res.status(401).send(error.details[0].message);
   }
 
   const user = await User.findOne({ email: req.body.email });
+  console.log("sdsdasdasdasdasdasdasdas");
+  console.log("Sdsada", user);
   if (!user) {
     return res.status(401).send("Invalid Email and or Password");
   }

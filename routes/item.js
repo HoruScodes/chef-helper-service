@@ -61,5 +61,16 @@ const getItemById = async (id) => {
   return item;
 };
 
+router.post("/deleteIngredient", async (req, res) => {
+  const id = req.body.id;
+  // console.log(id);
+  try {
+    const response = await Item.findByIdAndDelete(id);
+    res.send(response);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;
 module.exports.getItemById = getItemById;
